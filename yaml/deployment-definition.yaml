@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: replicset-nginx
+  labels:
+    type: replicaset-test
+    app: myapp-rs
+
+spec:
+  template:  # Now please notice that below section is copied from yaml of kind: Pod
+    metadata:
+      name: replicaset-pod-nginx
+      labels:
+        name: rs-nginx
+        type: rs-front-end
+
+    spec:
+      containers:
+        - name: container-rs-nginx
+          image: nginx:1.7.1
+  replicas: 3
+  selector:
+    matchExpressions:
+      - key: type
+        operator: In 
+        values:
+          - "rs-front-end"

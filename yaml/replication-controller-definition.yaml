@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: rc-nginx
+  labels:
+    type: replicationcontroller-test
+    app: myapp
+
+spec:
+  template:  # Now please notice that below section is copied from yaml of kind: Pod
+    metadata:
+      name: rc-pod-nginx
+      labels:
+        name: rc-nginx
+
+    spec:
+      containers:
+        - name: container-rc-nginx
+          image: nginx
+  replicas: 3
